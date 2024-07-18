@@ -1,16 +1,14 @@
 ---
-
+import Layout from "@/components/layout/default.astro"
+import { ChatRoom } from "@/containers/ai/container"
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Fragment slot={"head"}>
+    <title>🚀</title>
+  </Fragment>
+  <Fragment slot={"main"}>
+    <main class="w-full flex flex-col">
+      <ChatRoom client:load />
+    </main>
+  </Fragment>
+</Layout>
