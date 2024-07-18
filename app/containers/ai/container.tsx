@@ -7,6 +7,7 @@ import { format, differenceInDays, formatDistanceToNow } from "date-fns"
 import { useEffect, useRef } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { handleCommandCtrlEnter } from "@/lib/keydown"
+import { useSession } from "@/hook/useSession"
 
 type ChatMeta = {
   avatarUrl?: string
@@ -23,6 +24,7 @@ export function ChatRoom() {
   const chatAreaRef = useRef<HTMLDivElement>(null)
   const [chats, setChats] = React.useState<Chat[]>([])
   const { data: responsive, set: setResponsive } = useResponsiveStore()
+  useSession()
   useEffect(() => {
     function setChatAreaHeight() {
       if (chatAreaRef.current) {
@@ -116,6 +118,13 @@ export function ChatMessageList({ chats }: { chats: Chat[] }) {
   )
 }
 export function ChatMessage({ chat }: { chat: Chat }) {
+  const [now, setNow] = React.useState(new Date())
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(new Date())
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
   return (
     <div
       className={cn(
@@ -129,9 +138,12 @@ export function ChatMessage({ chat }: { chat: Chat }) {
       <div className="flex flex-col gap-2">
         <div className="bg-muted px-4 py-2 rounded-lg">{chat.content}</div>
         <div className="text-xs text-white/50">
-          {differenceInDays(chat.timestamp, new Date()) > 1
+          {differenceInDays(chat.timestamp, now) > 1
             ? format(chat.timestamp, "LL")
-            : formatDistanceToNow(chat.timestamp)}
+            : formatDistanceToNow(chat.timestamp, {
+                addSuffix: false,
+                includeSeconds: false,
+              })}
         </div>
       </div>
     </div>
