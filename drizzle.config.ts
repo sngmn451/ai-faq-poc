@@ -4,7 +4,7 @@ import { defineConfig } from "drizzle-kit"
 const { DB_URL, DB_AUTHTOKEN } = process.env
 
 export default defineConfig({
-  schema: "./src/core/schema",
+  schema: "./src/schema",
   out: "./migrations",
   dialect: "sqlite",
   driver: "turso",

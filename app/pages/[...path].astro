@@ -1,14 +1,14 @@
 ---
 import Layout from "@/components/layout/default.astro"
-import { ChatRoom } from "@/containers/ai/container"
 ---
 <Layout>
   <Fragment slot={"head"}>
     <title>🚀</title>
   </Fragment>
   <Fragment slot={"main"}>
-    <main class="w-full flex flex-col">
-      <ChatRoom client:load />
-    </main>
+    <main id="root" class="w-full flex flex-col"/>
+    <script>
+      import "@/main"
+    </script>
   </Fragment>
 </Layout>

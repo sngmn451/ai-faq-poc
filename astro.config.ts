@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config"
 import react from "@astrojs/react"
-
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 import tailwind from "@astrojs/tailwind"
 import cloudflare from "@astrojs/cloudflare"
 
@@ -19,7 +19,19 @@ export default defineConfig({
       enabled: true,
       configPath: "wrangler.json",
       experimentalJsonConfig: true,
-      persist: "./.cache/wrangler/v3",
+      persist: {
+        path: "./.cache/wrangler/v3",
+      },
     },
   }),
+  vite: {
+    plugins: [
+      TanStackRouterVite({
+        routesDirectory: "./app/routes",
+        generatedRouteTree: "./app/routeTree.gen.ts",
+        quoteStyle: "double",
+        semicolons: false,
+      }),
+    ],
+  },
 })

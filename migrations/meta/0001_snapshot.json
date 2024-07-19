@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "617a32bf-3215-4c19-a3a1-6d2f553a38cb",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "542aa6c0-40af-4d0d-b459-5ef671da4f20",
+  "prevId": "617a32bf-3215-4c19-a3a1-6d2f553a38cb",
   "tables": {
     "chatmessages": {
       "name": "chatmessages",
@@ -26,6 +26,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "session_id": {
