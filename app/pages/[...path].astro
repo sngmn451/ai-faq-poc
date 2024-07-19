@@ -1,14 +1,14 @@
 ---
-import Layout from "@/components/layout/default.astro"
+import Layout from "@/layout/default.astro"
+import { App } from "@/app"
 ---
 <Layout>
   <Fragment slot={"head"}>
     <title>🚀</title>
   </Fragment>
   <Fragment slot={"main"}>
-    <main id="root" class="w-full flex flex-col"/>
-    <script>
-      import "@/main"
-    </script>
+    <main class="w-full min-h-[100dvh] flex flex-col">
+      <App client:only="react" />
+    </main>
   </Fragment>
 </Layout>

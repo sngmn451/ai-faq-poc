@@ -57,12 +57,48 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+
+  .brand {
+    /* CSS: .bg-gradient { background: var(--gradient) } */
+    --gradient: linear-gradient(to top left, #0052d4, #4364f7, #6fb1fc);
+
+    --background: 230 65% 3.36%;
+    --foreground: 230 10% 97.1%;
+
+    --muted: 230 50% 12.6%;
+    --muted-foreground: 230 10% 54.2%;
+
+    --popover: 230 45% 5.46%;
+    --popover-foreground: 230 10% 97.1%;
+
+    --card: 230 45% 5.46%;
+    --card-foreground: 230 10% 97.1%;
+
+    --border: 230 50% 12.6%;
+    --input: 230 50% 12.6%;
+
+    --primary: 230 100% 42%;
+    --primary-foreground: 230 10% 97.1%;
+
+    --secondary: 230 50% 12.6%;
+    --secondary-foreground: 230 10% 97.1%;
+
+    --accent: 230 50% 12.6%;
+    --accent-foreground: 230 10% 97.1%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 230 10% 97.1%;
+
+    --ring: 230 100% 42%;
+  }
 }
 
 @layer base {
   :root {
     font-family: Inter, sans-serif;
-    font-feature-settings: "liga" 1, "calt" 1; /* fix for Chrome */
+    font-feature-settings:
+      "liga" 1,
+      "calt" 1; /* fix for Chrome */
   }
   @supports (font-variation-settings: normal) {
     :root {
@@ -75,5 +111,8 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+  }
+  .bg-gradient {
+    background: var(--gradient);
   }
 }

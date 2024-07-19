@@ -11,6 +11,8 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { Repo } from "@/core/repositories"
 import type { Chat } from "@/core/entities/chat/repository"
 import type { TChatMessage } from "@/core/entities/chat/interface"
+import { useWindowSize } from "@uidotdev/usehooks"
+import { brakepoints } from "@/core/config/responsive"
 
 // type ChatMeta = {
 //   avatarUrl?: string
@@ -23,15 +25,19 @@ import type { TChatMessage } from "@/core/entities/chat/interface"
 //   meta: ChatMeta
 // }
 
-export function ChatRoom() {
-  const chatAreaRef = useRef<HTMLDivElement>(null)
+export function ChatRoomContainer() {
+  const chatBoxRef = useRef<HTMLDivElement>(null)
+  const charRoomRef = useRef<HTMLDivElement>(null)
   // const [chats, setChats] = React.useState<Chat[]>([])
   const { data: responsive, set: setResponsive } = useResponsiveStore()
   useSession()
   useEffect(() => {
     function setChatAreaHeight() {
-      if (chatAreaRef.current) {
-        setResponsive("chat-height", chatAreaRef.current.offsetHeight)
+      if (chatBoxRef.current) {
+        setResponsive("chatbox-height", chatBoxRef.current.offsetHeight)
+      }
+      if (charRoomRef.current) {
+        setResponsive("chatroom-width", charRoomRef.current.offsetWidth)
       }
     }
     setChatAreaHeight()
@@ -63,16 +69,17 @@ export function ChatRoom() {
   return (
     <>
       <div
-        className="p-4 w-full"
+        ref={charRoomRef}
+        className="p-4 w-full relative min-h-[100dvh]"
         style={{
-          maxHeight: `calc(100dvh-${responsive["chat-height"]}px)`,
+          maxHeight: `calc(100dvh-${responsive["chatbox-height"]}px)`,
         }}
       >
         <div className="flex flex-col gap-2">
           {JSON.stringify(chats)}
           {/* <ChatMessageList chat={chats as Chat} /> */}
         </div>
-        <ChatBox ref={chatAreaRef} submitPrompt={submitPrompt} />
+        <ChatBox ref={chatBoxRef} submitPrompt={submitPrompt} />
       </div>
     </>
   )
@@ -86,6 +93,8 @@ type ChatBoxInput = {
   prompt: string
 }
 const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, submitPrompt, ...props }, ref) => {
+  const { data: responsive, set: setResponsive } = useResponsiveStore()
+
   const { register, handleSubmit, setValue } = useForm<ChatBoxInput>({
     mode: "onSubmit",
   })
@@ -95,7 +104,10 @@ const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, sub
   }
 
   return (
-    <div {...props} className={cn("w-[calc(100vw-2rem)] rounded-lg fixed bottom-4 left-4 p-4 bg-muted/20 shadow-md", className)}>
+    <div
+      {...props}
+      className={cn("rounded-lg backdrop-blur absolute w-[calc(100%-2rem)] bottom-4 p-4 bg-muted/20 shadow-md transition-[width]", className)}
+    >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <Textarea
           placeholder="Type a message..."

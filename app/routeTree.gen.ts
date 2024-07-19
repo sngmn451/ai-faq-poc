@@ -11,19 +11,25 @@
 // Import Routes
 
 import { Route as rootRoute } from "./routes/__root"
-import { Route as AboutImport } from "./routes/about"
+import { Route as ChatImport } from "./routes/chat"
 import { Route as IndexImport } from "./routes/index"
+import { Route as ChatRoomIdImport } from "./routes/chat/$roomId"
 
 // Create/Update Routes
 
-const AboutRoute = AboutImport.update({
-  path: "/about",
+const ChatRoute = ChatImport.update({
+  path: "/chat",
   getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
   path: "/",
   getParentRoute: () => rootRoute,
+} as any)
+
+const ChatRoomIdRoute = ChatRoomIdImport.update({
+  path: "/$roomId",
+  getParentRoute: () => ChatRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -37,19 +43,29 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    "/about": {
-      id: "/about"
-      path: "/about"
-      fullPath: "/about"
-      preLoaderRoute: typeof AboutImport
+    "/chat": {
+      id: "/chat"
+      path: "/chat"
+      fullPath: "/chat"
+      preLoaderRoute: typeof ChatImport
       parentRoute: typeof rootRoute
+    }
+    "/chat/$roomId": {
+      id: "/chat/$roomId"
+      path: "/$roomId"
+      fullPath: "/chat/$roomId"
+      preLoaderRoute: typeof ChatRoomIdImport
+      parentRoute: typeof ChatImport
     }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexRoute, AboutRoute })
+export const routeTree = rootRoute.addChildren({
+  IndexRoute,
+  ChatRoute: ChatRoute.addChildren({ ChatRoomIdRoute }),
+})
 
 /* prettier-ignore-end */
 
@@ -60,14 +76,21 @@ export const routeTree = rootRoute.addChildren({ IndexRoute, AboutRoute })
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/chat"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/about": {
-      "filePath": "about.tsx"
+    "/chat": {
+      "filePath": "chat.tsx",
+      "children": [
+        "/chat/$roomId"
+      ]
+    },
+    "/chat/$roomId": {
+      "filePath": "chat/$roomId.tsx",
+      "parent": "/chat"
     }
   }
 }

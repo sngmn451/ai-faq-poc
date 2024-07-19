@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-type TField = "chat-height"
+type TField = "chatbox-height" | "chatroom-width"
 type TData = {
   [key in TField]: any
 }
@@ -11,7 +11,8 @@ type TResponsiveStore = {
 
 export const useResponsiveStore = create<TResponsiveStore>()((set) => ({
   data: {
-    "chat-height": 0,
+    "chatbox-height": 0,
+    "chatroom-width": 0,
   },
   set: (field: TField, value: any) => {
     set((state) => ({

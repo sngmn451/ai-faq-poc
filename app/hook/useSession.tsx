@@ -21,5 +21,5 @@ async function checkSession() {
 }
 
 async function renewSession() {
-  await fetch("/api/session/renew")
+  await fetch("/api/v1/sessions/renew")
 }
