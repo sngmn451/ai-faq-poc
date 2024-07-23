@@ -29,6 +29,7 @@ export default defineConfig({
         net: "node:net",
         tls: "node:tls",
         http: "node:http",
+        events: "node:events",
       },
     },
   },
