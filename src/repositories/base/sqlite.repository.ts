@@ -15,7 +15,7 @@ export class BaseSqliteRepository<Model extends SQLiteTable & { id: any }> imple
   }
   async Connection(): Promise<boolean> {
     try {
-      await await this.db.run(sql`SELECT 1+1 AS result`)
+      await this.db.run(sql`SELECT 1+1 AS result`)
       return true
     } catch {
       return false

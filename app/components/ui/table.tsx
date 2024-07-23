@@ -1,7 +1,6 @@
 import * as React from "react"
 
 import { cn } from "app/lib/utils"
-import { string } from "zod"
 
 const Table = React.forwardRef<
   HTMLTableElement,

@@ -3,7 +3,6 @@ import type { IChatRepository, TChatRenamePayload, TChatSendMessagePayload } fro
 import { BaseApiRepository } from "../base/api.repository"
 import { Get, Post, Put } from "@/lib/fetch"
 import type { ApiResponse } from "@/core/types/api"
-import { nanoid } from "nanoid"
 import type { TQueryOptionSchema } from "@/core/types/query-options"
 
 export class ChatRepository extends BaseApiRepository implements IChatRepository {

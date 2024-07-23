@@ -2,7 +2,6 @@ import { text, integer, sqliteTable, index } from "drizzle-orm/sqlite-core"
 import { nanoid } from "nanoid"
 import { sessions } from "./session"
 
-const EXPIRES = 1000 * 60 * 60 * 24 * 7
 export const chatrooms = sqliteTable(
   "chatrooms",
   {

@@ -20,7 +20,7 @@ export async function ChatRenameHandler(context: Context) {
   if (context.req.param("key")) {
     params.key = context.req.param("key")!
   }
-  const response = await Uc.chat.Rename(params)
+  await Uc.chat.Rename(params)
 
   return context.json({
     data: {

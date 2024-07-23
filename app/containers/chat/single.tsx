@@ -87,7 +87,9 @@ export function ChatRoomContainer({ roomKey }: Props) {
     refetch()
   }, [mutationError])
   async function submitPrompt(prompt: string) {
-    if (!isPending) await sendMesage(prompt)
+    if (!isPending) {
+      sendMesage(prompt)
+    }
   }
   return (
     <>
