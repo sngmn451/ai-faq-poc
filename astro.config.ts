@@ -34,7 +34,7 @@ export default defineConfig({
       },
     },
     ssr: {
-      noExternal: ["node:net", "node:tls", "node:http", "node:events", "node:url"],
+      noExternal: true,
     },
   },
 })
