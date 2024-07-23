@@ -33,5 +33,8 @@ export default defineConfig({
         url: "node:url",
       },
     },
+    ssr: {
+      noExternal: ["node:net", "node:tls", "node:http", "node:events", "node:url"],
+    },
   },
 })
