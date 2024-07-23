@@ -14,16 +14,7 @@ export default defineConfig({
   ],
   srcDir: "app",
   output: "server",
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true,
-      configPath: "wrangler.json",
-      experimentalJsonConfig: true,
-      persist: {
-        path: "./.cache/wrangler/v3",
-      },
-    },
-  }),
+  adapter: cloudflare(),
   vite: {
     plugins: [
       TanStackRouterVite({
