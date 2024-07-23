@@ -1,7 +1,7 @@
 import "dotenv/config"
 import data from "./data.json"
 import * as schema from "~/schema"
-import { db } from "../connection"
+import { db } from "~/db/connection.cli"
 import { BaseOpenAIRepository } from "~/repositories/base/openapi.repository"
 
 export async function Migrate() {

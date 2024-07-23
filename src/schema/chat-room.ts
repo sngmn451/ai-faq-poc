@@ -8,6 +8,7 @@ export const chatrooms = sqliteTable(
   {
     id: integer("id").unique().primaryKey({ autoIncrement: true }),
     key: text("key").unique().$defaultFn(nanoid).notNull(),
+    name: text("name"),
     sessionId: text("session_id")
       .notNull()
       .references(() => sessions.id),
@@ -21,5 +22,6 @@ export const chatrooms = sqliteTable(
   },
   (column) => ({
     idxSessionId: index("idxChatroomSessionId").on(column.id, column.sessionId),
-  })
+    keySessionId: index("keyChatroomSessionId").on(column.key, column.sessionId),
+  }),
 )
