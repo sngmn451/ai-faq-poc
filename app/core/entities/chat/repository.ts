@@ -2,7 +2,13 @@ import type { IChat, TChat, TChatMessage } from "./interface"
 
 export class Chat implements IChat {
   constructor(private chat: TChat) {}
-  GetMessage() {
+  GetId() {
+    return this.chat.id
+  }
+  GetRoomId() {
+    return this.chat.roomId
+  }
+  GetMessages() {
     return this.chat.messages
   }
   GetLastMessage() {

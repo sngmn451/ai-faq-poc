@@ -1,20 +1,17 @@
 export interface IChat {
-  GetMessage(): TChatMessage[]
+  GetId(): number
+  GetRoomId(): string
+  GetMessages(): TChatMessage[]
   GetLastMessage(): TChatMessage
 }
 export type TChatMessage = {
   source: "human" | "ai"
   content: string
   timestamp: Date
-  meta: TChatMessageMeta
-}
-export type TChatMessageMeta = {
-  avatarUrl?: string
-  alt: string
 }
 export type TChat = {
   id: number
-  key: string
+  roomId: string
   timestamp: Date
   messages: TChatMessage[]
 }

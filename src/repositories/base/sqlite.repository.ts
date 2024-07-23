@@ -39,7 +39,6 @@ export class BaseSqliteRepository<Model extends SQLiteTable & { id: any }> imple
     return result.at(0)!
   }
   async FindAll(options?: TQueryOption) {
-    console.log(options?.orderBy ? options?.orderBy?.map((order) => `${order.id} ${order.desc ? "DESC" : "ASC"}`).join(",") : "")
     const result = await this.db
       .select()
       .from(this.model)
@@ -47,9 +46,9 @@ export class BaseSqliteRepository<Model extends SQLiteTable & { id: any }> imple
       .limit(options?.limit || DEFAULT_LIMIT)
       .offset(options?.offset || DEFAULT_OFFSET)
       .orderBy(
-        options?.orderBy
+        Array.isArray(options?.orderBy) && options?.orderBy?.length! > 1
           ? sql.raw(options?.orderBy?.map((order) => `${order.id} ${order.desc ? "DESC" : "ASC"}`).join(","))
-          : desc(this.model.id)
+          : desc(this.model.id),
       )
     return result
   }

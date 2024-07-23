@@ -1,14 +1,5 @@
-import "dotenv/config"
 import { migrate } from "drizzle-orm/libsql/migrator"
-import { drizzle } from "drizzle-orm/libsql"
-import { createClient } from "@libsql/client"
-
-const client = createClient({
-  url: process.env.DB_URL!,
-  authToken: process.env.DB_AUTHTOKEN!,
-})
-
-export const db = drizzle(client)
+import { db } from "./connection"
 
 async function main() {
   console.log(`Begins migration 🚧...`)

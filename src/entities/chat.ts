@@ -24,7 +24,7 @@ export class Chat {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
-  message: TChatMessage[]
+  messages: TChatMessage[]
   constructor(private chat: TChat) {
     this.id = chat.id
     this.key = chat.key
@@ -32,6 +32,6 @@ export class Chat {
     this.createdAt = chat.createdAt
     this.updatedAt = chat.updatedAt
     this.deletedAt = chat.deletedAt
-    this.message = chat.messages
+    this.messages = chat.messages
   }
 }

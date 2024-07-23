@@ -16,7 +16,7 @@ function RootComponent() {
       <QueryClientProvider client={queryClient}>
         <Outlet />
         <TanStackRouterDevtools />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools initialIsOpen={false} buttonPosition="top-right" />
       </QueryClientProvider>
     </>
   )

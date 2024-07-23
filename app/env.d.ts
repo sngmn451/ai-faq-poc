@@ -10,6 +10,9 @@ declare namespace App {
 interface ImportMetaEnv {
   readonly DB_URL: string
   readonly DB_AUTHTOKEN: string
+  readonly OPENAI_KEY: string
+  readonly OPENAI_PROJECT_ID: string
+  readonly OPENAI_ORG_ID: string
 }
 
 interface ImportMeta {

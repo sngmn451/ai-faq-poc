@@ -12,6 +12,6 @@ export default defineConfig({
     url: DB_URL!,
     authToken: DB_AUTHTOKEN!,
   },
-  verbose: false,
+  verbose: true,
   strict: true,
 })
