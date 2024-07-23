@@ -1,4 +1,4 @@
-import type { IBaseOpenAIRepository } from "../base/openapi.interface"
+import type { IBaseOpenAIRepository } from "../base/openai.interface"
 
 export interface IOpenAIFaqsRepository extends IBaseOpenAIRepository {
   SendMessage({ message, history }: TOpenAIFaqPrompt): Promise<string>

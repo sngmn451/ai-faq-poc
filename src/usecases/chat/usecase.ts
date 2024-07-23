@@ -137,8 +137,6 @@ export class ChatUsecase implements IChatUsecase {
     const now = new Date()
     let previousMessage: TChatMessage[] = []
 
-    console.log({ roomKey, message, sessionId })
-
     if (roomKey) {
       const chatroom = (
         await Repo.chatroom.FindAll({

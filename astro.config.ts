@@ -33,5 +33,12 @@ export default defineConfig({
         semicolons: false,
       }),
     ],
+    resolve: {
+      alias: {
+        net: "node:net",
+        tls: "node:tls",
+        http: "node:http",
+      },
+    },
   },
 })

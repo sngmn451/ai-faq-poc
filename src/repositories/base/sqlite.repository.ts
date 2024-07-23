@@ -22,7 +22,6 @@ export class BaseSqliteRepository<Model extends SQLiteTable & { id: any }> imple
     }
   }
   async Count(options?: TQueryOption) {
-    console.log(options?.orderBy ? options?.orderBy?.map((order) => `${order.id} ${order.desc ? "DESC" : "ASC"}`).join(",") : "")
     const result = await this.db
       .select({ count: sql<number>`COUNT(*)` })
       .from(this.model)

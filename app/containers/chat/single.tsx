@@ -26,6 +26,7 @@ interface Props {
   roomKey?: string
 }
 export function ChatRoomContainer({ roomKey }: Props) {
+  const navigate = useNavigate()
   const displayChatList = useUIStore().displayChatList
   const chatBoxRef = useRef<HTMLDivElement>(null)
   const chatRoomRef = useRef<HTMLDivElement>(null)
@@ -74,8 +75,8 @@ export function ChatRoomContainer({ roomKey }: Props) {
         payload.roomKey = roomKey
       }
       const key = await Repo.chat.SendMessage(payload)
+      console.log({ key, roomKey })
       if (key !== roomKey) {
-        const navigate = useNavigate()
         navigate({ to: `/chat/${key}` })
       } else {
         await refetch()
@@ -106,13 +107,13 @@ export function ChatRoomContainer({ roomKey }: Props) {
           >
             <div
               className={cn(
-                !displayChatList && "pl-12",
-                " sticky top-0 p-4 z-10 bg-background/50 backdrop-blur min-h-9 flex flex-row items-center justify-start",
+                " sticky top-0 p-4 z-10 bg-background/50 backdrop-blur min-h-[4.25rem] flex flex-row items-center justify-start",
+                !displayChatList && "pl-16",
               )}
             >
               <b>{chat.GetName()}</b>
             </div>
-            <ChatMessageList chat={chat} />
+            <ChatMessageList chat={chat} isPending={isPending} />
           </div>
         )}
         {!chat && <NewChatComponent />}
@@ -177,12 +178,25 @@ const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, sub
   )
 })
 
-export function ChatMessageList({ chat }: { chat: Chat }) {
+export function ChatMessageList({ chat, isPending }: { chat: Chat; isPending: boolean }) {
   return (
     <div className="px-4">
       {chat.GetMessages().map((message, index) => (
         <ChatMessage key={index} message={message} />
       ))}
+      {isPending && <ChatMessageAIThinking />}
+    </div>
+  )
+}
+function ChatMessageAIThinking({ message = "Finding your best answer..." }: { message?: string }) {
+  return (
+    <div className={cn("flex flex-row gap-4")}>
+      <Avatar alt={"AI"} />
+      <div className="flex flex-col gap-2 max-w-[calc(100%-8rem)]">
+        <div className="bg-muted px-4 py-2 rounded-lg">
+          <LoadingComponent message={message} />
+        </div>
+      </div>
     </div>
   )
 }
@@ -195,7 +209,7 @@ export function ChatMessage({ message }: { message: TChatMessage }) {
     return () => clearInterval(interval)
   }, [])
   return (
-    <div className={cn("flex flex-row gap-4", message.source === "human" ? "justify-end" : "")}>
+    <div className={cn("flex flex-row gap-4 pb-4", message.source === "human" ? "justify-end" : "")}>
       {message.source === "ai" && <Avatar alt={"AI"} />}
       <div className="flex flex-col gap-2 max-w-[calc(100%-8rem)]">
         <div className="bg-muted px-4 py-2 rounded-lg">{message.content}</div>

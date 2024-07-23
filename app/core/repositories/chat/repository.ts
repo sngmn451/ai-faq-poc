@@ -29,7 +29,6 @@ export class ChatRepository extends BaseApiRepository implements IChatRepository
   }
   async GetChat(roomKey?: string, options?: Pick<TQueryOptionSchema, "limit" | "offset">) {
     if (roomKey) {
-      console.log({ roomKey, options })
       const url = new URL(this.baseUrl + "/chats/" + roomKey, window.location.origin)
       if (options && Object.keys(options).length > 0) {
         Object.entries(options).forEach(([key, value]) => {

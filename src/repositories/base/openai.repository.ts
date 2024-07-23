@@ -1,5 +1,5 @@
 import { OpenAI } from "openai"
-import type { IBaseOpenAIRepository, TBaseOpenAIEmbeddingsData, TBaseOpenAIEmbeddingsDataOutput } from "./openapi.interface"
+import type { IBaseOpenAIRepository, TBaseOpenAIEmbeddingsData, TBaseOpenAIEmbeddingsDataOutput } from "./openai.interface"
 
 const OPENAI_MODEL = "text-embedding-ada-002"
 export class BaseOpenAIRepository implements IBaseOpenAIRepository {
