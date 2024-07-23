@@ -7,9 +7,9 @@ export function NewChatComponent() {
 
   return (
     <div
-      className="w-full h-full flex-1 flex flex-col items-center justify-center"
+      className="px-4 w-full h-full flex-1 flex flex-col items-center justify-center"
       style={{
-        paddingBottom: `calc(${responsive["chatbox-height"]}px + 1rem)`,
+        paddingBottom: `calc(${responsive["chatbox-height"]}px + 2rem)`,
       }}
     >
       <div className="flex-1" />

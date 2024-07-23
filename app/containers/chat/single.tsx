@@ -10,7 +10,7 @@ import { useSession } from "@/hook/useSession"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { Repo } from "@/core/repositories"
 import type { Chat } from "@/core/entities/chat/entity"
-import type { TChat, TChatMessage } from "@/core/entities/chat/interface"
+import type { TChatMessage } from "@/core/entities/chat/interface"
 import { ArrowUp } from "lucide-react"
 import { NewChatComponent } from "@/components/chat/new"
 import { Avatar } from "@/components/primitives/avatar"
@@ -28,7 +28,7 @@ interface Props {
 export function ChatRoomContainer({ roomKey }: Props) {
   const displayChatList = useUIStore().displayChatList
   const chatBoxRef = useRef<HTMLDivElement>(null)
-  const charRoomRef = useRef<HTMLDivElement>(null)
+  const chatRoomRef = useRef<HTMLDivElement>(null)
   const { data: responsive, set: setResponsive } = useResponsiveStore()
   useSession()
   useEffect(() => {
@@ -36,8 +36,8 @@ export function ChatRoomContainer({ roomKey }: Props) {
       if (chatBoxRef.current) {
         setResponsive("chatbox-height", chatBoxRef.current.offsetHeight)
       }
-      if (charRoomRef.current) {
-        setResponsive("chatroom-width", charRoomRef.current.offsetWidth)
+      if (chatRoomRef.current) {
+        setResponsive("chatroom-width", chatRoomRef.current.offsetWidth)
       }
     }
     setChatAreaHeight()
@@ -54,9 +54,12 @@ export function ChatRoomContainer({ roomKey }: Props) {
   }, [])
 
   const { data: chat, refetch } = useQuery({
-    queryKey: ["chat", roomKey || ""],
+    queryKey: ["chat", roomKey || "new"],
     async queryFn() {
-      return await Repo.chat.GetChat(roomKey)
+      if (chatRoomRef?.current) {
+        chatRoomRef.current.scrollTo(0, chatRoomRef.current.scrollHeight)
+      }
+      return await Repo.chat.GetChat(roomKey, { limit: 999, offset: 0 })
     },
   })
   const {
@@ -88,7 +91,7 @@ export function ChatRoomContainer({ roomKey }: Props) {
   return (
     <>
       <div
-        ref={charRoomRef}
+        ref={chatRoomRef}
         className="flex flex-col w-full relative h-[100dvh] overflow-y-auto"
         style={{
           maxHeight: `calc(100dvh-${responsive["chatbox-height"]}px)`,

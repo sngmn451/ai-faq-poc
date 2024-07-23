@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { ChatRoomContainer } from "@/containers/chat/single"
 import { cn } from "@/lib/utils"
-import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router"
+import { createFileRoute, Outlet } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import { PanelLeft, Pencil } from "lucide-react"
 import { ChatListContainer } from "@/containers/chat/list"
@@ -14,6 +13,7 @@ export const Route = createFileRoute("/chat")({
 })
 
 function Component() {
+  const navigate = Route.useNavigate()
   const displayChatList = useUIStore().displayChatList
   const setDisplayChatList = useUIStore().setDisplayChatList
   const { width } = useWindowSize()
@@ -36,7 +36,7 @@ function Component() {
         <Button variant={"ghost"} size={"icon"} onMouseDown={() => setDisplayChatList(!displayChatList)}>
           <PanelLeft />
         </Button>
-        {displayChatList && <Button>New Chat</Button>}
+        {displayChatList && <Button onMouseDown={() => navigate({ to: "/chat" })}>New Chat</Button>}
       </div>
       <div
         className={cn(
