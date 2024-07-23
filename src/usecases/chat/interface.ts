@@ -6,11 +6,17 @@ export interface IChatUsecase {
   ListChatrooms(sessionId: string, params: TQueryOption, key?: string): Promise<TRestApiListResponseSchema<Chat>>
   GetChatroom(key: string, params: TQueryOption): Promise<TRestApiResponse<Chat>>
   LoadChatMessages(key: string, params: TQueryOption): Promise<TRestApiListChildResponseSchema<Chat>>
-  SendMessage({ key, sessionId, message }: TChatUcSendMessage): Promise<string>
+  SendMessage(params: TChatUcSendMessageParams): Promise<string>
+  Rename(params: TChatRenameParams): Promise<boolean>
 }
 
-export type TChatUcSendMessage = {
+type TChatSingleParams = {
   key?: string
   sessionId: string
+}
+export type TChatUcSendMessageParams = TChatSingleParams & {
   message: string
+}
+export type TChatRenameParams = TChatSingleParams & {
+  name: string
 }

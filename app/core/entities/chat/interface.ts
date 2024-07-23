@@ -4,6 +4,7 @@ export interface IChat {
   GetName(): string
   GetMessages(): TChatMessage[]
   GetLastMessage(): TChatMessage
+  Rename(name: string): void
 }
 export type TChatMessage = {
   source: "human" | "ai"

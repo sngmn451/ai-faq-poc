@@ -1,7 +1,7 @@
 import { Chat } from "@/core/entities/chat/entity"
-import type { IChatRepository, TChatSendMessagePayload } from "./interface"
+import type { IChatRepository, TChatRenamePayload, TChatSendMessagePayload } from "./interface"
 import { BaseApiRepository } from "../base/api.repository"
-import { Get, Post } from "@/lib/fetch"
+import { Get, Post, Put } from "@/lib/fetch"
 import type { ApiResponse } from "@/core/types/api"
 import { nanoid } from "nanoid"
 import type { TQueryOptionSchema } from "@/core/types/query-options"
@@ -57,6 +57,13 @@ export class ChatRepository extends BaseApiRepository implements IChatRepository
       .parsedBody?.data as TChatSendMessageResponse
     return response.key
   }
+  async Rename({ roomKey, name }: TChatRenamePayload) {
+    console.log({ roomKey, name })
+    const response = await Put<ApiResponse<TChatRenameResponse>>(`${this.baseUrl}/chats/${roomKey}/rename`, {
+      body: { name },
+    })
+    return response.ok
+  }
 }
 
 type TChatSendMessageResponse = {
@@ -80,4 +87,7 @@ type TChatMessageResponse = {
     avatarUrl?: string
     alt: string
   }
+}
+type TChatRenameResponse = {
+  success: boolean
 }

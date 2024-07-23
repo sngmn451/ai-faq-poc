@@ -22,7 +22,7 @@ export async function Get<T>(
   path: string,
   { headers }: RequestInit = {
     headers: {},
-  }
+  },
 ): Promise<HttpResponse<T>> {
   return await http<T>(
     new Request(path, {
@@ -30,7 +30,7 @@ export async function Get<T>(
         ...headers,
         ...timezoneHeaders,
       },
-    })
+    }),
   )
 }
 
@@ -45,31 +45,33 @@ export async function Post<T>(path: string, body: object, args: RequestInit = {}
         ...timezoneHeaders,
         ...args.headers,
       },
-    })
+    }),
   )
 }
 
 export async function Put<T>(
   path: string,
   {
-    headers,
-    body,
+    headers = {},
+    body = {},
   }: {
-    headers: object
-    body: object
-  }
+    headers?: object
+    body?: object
+  },
+  args: RequestInit = {},
 ): Promise<HttpResponse<T>> {
   const httpHeaders = {
     ...headers,
     ...defaultFetchHeaders,
     ...timezoneHeaders,
-    method: "PUT",
   }
   return await http<T>(
     new Request(path, {
-      headers: httpHeaders,
+      ...args,
+      method: "put",
       body: JSON.stringify(body),
-    })
+      headers: httpHeaders,
+    }),
   )
 }
 
@@ -81,7 +83,7 @@ export async function Delete<T>(
   }: {
     headers: object
     body: object
-  }
+  },
 ): Promise<HttpResponse<T>> {
   const httpHeaders = {
     ...headers,
@@ -93,6 +95,6 @@ export async function Delete<T>(
     new Request(path, {
       headers: httpHeaders,
       body: JSON.stringify(body),
-    })
+    }),
   )
 }

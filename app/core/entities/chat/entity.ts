@@ -17,4 +17,7 @@ export class Chat implements IChat {
   GetLastMessage() {
     return this.chat.messages.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime()).at(0) as TChatMessage
   }
+  Rename(name: string) {
+    this.chat.name = name
+  }
 }

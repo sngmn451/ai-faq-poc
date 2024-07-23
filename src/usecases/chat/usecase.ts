@@ -1,6 +1,6 @@
 import { Chat, TChatMessageSource } from "~/entities/chat"
 import type { TQueryOption } from "~/interface/query-options"
-import type { IChatUsecase, TChatUcSendMessage } from "./interface"
+import type { IChatUsecase, TChatRenameParams, TChatUcSendMessageParams } from "./interface"
 import { Repo } from "~/repositories"
 import { DEFAULT_LIMIT, DEFAULT_OFFSET } from "~/config/query-options"
 import { and, eq } from "drizzle-orm"
@@ -131,7 +131,7 @@ export class ChatUsecase implements IChatUsecase {
       limit: params.limit || DEFAULT_LIMIT,
     }
   }
-  async SendMessage({ key, message, sessionId }: TChatUcSendMessage) {
+  async SendMessage({ key, message, sessionId }: TChatUcSendMessageParams) {
     let roomKey: string | undefined = key
     let roomId: number
     const now = new Date()
@@ -195,5 +195,20 @@ export class ChatUsecase implements IChatUsecase {
       updatedAt: new Date(),
     })
     return roomKey
+  }
+
+  async Rename({ key, name, sessionId }: TChatRenameParams) {
+    const chatroom = (
+      await Repo.chatroom.FindAll({
+        where: and(eq(schema.chatrooms.key, key!), eq(schema.chatrooms.sessionId, sessionId)),
+        limit: 1,
+      })
+    ).at(0)!
+    try {
+      await Repo.chatroom.Update(chatroom.id, { name, sessionId, updatedAt: new Date() })
+    } catch (e: any) {
+      throw new Error(e)
+    }
+    return true
   }
 }
