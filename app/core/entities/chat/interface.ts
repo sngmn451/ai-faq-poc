@@ -1,6 +1,7 @@
 export interface IChat {
   GetId(): number
-  GetRoomId(): string
+  GetKey(): string
+  GetName(): string
   GetMessages(): TChatMessage[]
   GetLastMessage(): TChatMessage
 }
@@ -11,7 +12,8 @@ export type TChatMessage = {
 }
 export type TChat = {
   id: number
-  roomId: string
+  name: string
+  key: string
   timestamp: Date
   messages: TChatMessage[]
 }

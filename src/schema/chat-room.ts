@@ -8,7 +8,7 @@ export const chatrooms = sqliteTable(
   {
     id: integer("id").unique().primaryKey({ autoIncrement: true }),
     key: text("key").unique().$defaultFn(nanoid).notNull(),
-    name: text("name"),
+    name: text("name").notNull(),
     sessionId: text("session_id")
       .notNull()
       .references(() => sessions.id),

@@ -5,8 +5,11 @@ export class Chat implements IChat {
   GetId() {
     return this.chat.id
   }
-  GetRoomId() {
-    return this.chat.roomId
+  GetKey() {
+    return this.chat.key
+  }
+  GetName() {
+    return this.chat.name
   }
   GetMessages() {
     return this.chat.messages

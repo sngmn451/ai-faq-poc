@@ -3,7 +3,7 @@ import type { TQueryOption } from "~/interface/query-options"
 import type { IChatUsecase, TChatUcSendMessage } from "./interface"
 import { Repo } from "~/repositories"
 import { DEFAULT_LIMIT, DEFAULT_OFFSET } from "~/config/query-options"
-import { and, eq, inArray, sql } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 import * as schema from "~/schema"
 import type { TChatMessage } from "~/repositories/faqs/interface"
 
@@ -28,6 +28,7 @@ export class ChatUsecase implements IChatUsecase {
           new Chat({
             id: chatroom.id,
             key: chatroom.key,
+            name: chatroom.name || "",
             sessionId: chatroom.sessionId,
             createdAt: chatroom.createdAt,
             updatedAt: chatroom.updatedAt,
@@ -35,10 +36,12 @@ export class ChatUsecase implements IChatUsecase {
             messages: (
               await Repo.chatmessage.FindAll({
                 where: eq(schema.chatmessages.chatroomId, chatroom.id),
-                limit: key ? 1 : params.limit,
+                limit: key ? params.limit : 1,
                 offset: params.offset,
+                orderBy: params.orderBy,
               })
             ).map((message) => ({
+              id: message.id,
               source: TChatMessageSource[message.source as keyof typeof TChatMessageSource],
               message: message.message!,
               createdAt: message.createdAt,
@@ -56,10 +59,15 @@ export class ChatUsecase implements IChatUsecase {
       limit: params.limit || DEFAULT_LIMIT,
     }
   }
-  async GetChatroom(id: number, params: TQueryOption) {
-    const chatroom = (await Repo.chatroom.FindOneById(id)) as (typeof schema.chatrooms)["$inferSelect"]
+  async GetChatroom(key: string, params: TQueryOption) {
+    const chatroom = (
+      await Repo.chatroom.FindAll({
+        where: eq(schema.chatrooms.key, key),
+        limit: 1,
+      })
+    ).at(0) as (typeof schema.chatrooms)["$inferSelect"]
     const chatmessages = await Repo.chatmessage.FindAll({
-      where: eq(schema.chatmessages.chatroomId, id),
+      where: eq(schema.chatmessages.chatroomId, chatroom.id),
       limit: params.limit,
       offset: params.offset,
     })
@@ -67,36 +75,43 @@ export class ChatUsecase implements IChatUsecase {
       data: new Chat({
         id: chatroom.id,
         key: chatroom.key,
+        name: chatroom.name || "",
         sessionId: chatroom.sessionId,
         createdAt: chatroom.createdAt,
         updatedAt: chatroom.updatedAt,
         deletedAt: chatroom.deletedAt,
-        messages: chatmessages
-          .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-          .map((message) => ({
-            source: TChatMessageSource[message.source as keyof typeof TChatMessageSource],
-            message: message.message!,
-            createdAt: message.createdAt,
-            updatedAt: message.updatedAt,
-          })),
+        messages: chatmessages.map((message) => ({
+          id: message.id,
+          source: TChatMessageSource[message.source as keyof typeof TChatMessageSource],
+          message: message.message!,
+          createdAt: message.createdAt,
+          updatedAt: message.updatedAt,
+        })),
       }),
     }
   }
-  async LoadChatMessages(chatroomId: number, params: TQueryOption) {
+  async LoadChatMessages(key: string, params: TQueryOption) {
+    const chatroom = (
+      await Repo.chatroom.FindAll({
+        where: eq(schema.chatrooms.key, key),
+        limit: 1,
+      })
+    ).at(0) as (typeof schema.chatrooms)["$inferSelect"]
+
     const count = await Repo.chatmessage.Count({
       ...params,
-      where: and(eq(schema.chatmessages.chatroomId, chatroomId)),
+      where: and(eq(schema.chatmessages.chatroomId, chatroom.id)),
     })
-    const chatroom = (await Repo.chatroom.FindOneById(chatroomId)) as (typeof schema.chatrooms)["$inferSelect"]
 
     const chatmessages = await Repo.chatmessage.FindAll({
       ...params,
-      where: and(eq(schema.chatmessages.chatroomId, chatroomId)),
+      where: and(eq(schema.chatmessages.chatroomId, chatroom.id)),
     })
     return {
       data: new Chat({
         id: chatroom.id,
         key: chatroom.key,
+        name: chatroom.name || "",
         sessionId: chatroom.sessionId,
         createdAt: chatroom.createdAt,
         updatedAt: chatroom.updatedAt,
@@ -116,15 +131,29 @@ export class ChatUsecase implements IChatUsecase {
       limit: params.limit || DEFAULT_LIMIT,
     }
   }
-  async SendMessage({ chatroomId, message, sessionId }: TChatUcSendMessage) {
-    let roomId: number | undefined = chatroomId
+  async SendMessage({ key, message, sessionId }: TChatUcSendMessage) {
+    let roomKey: string | undefined = key
+    let roomId: number
     const now = new Date()
     let previousMessage: TChatMessage[] = []
-    if (roomId) {
+
+    console.log({ roomKey, message, sessionId })
+
+    if (roomKey) {
+      const chatroom = (
+        await Repo.chatroom.FindAll({
+          where: and(eq(schema.chatrooms.key, roomKey), eq(schema.chatrooms.sessionId, sessionId)),
+          limit: 1,
+        })
+      ).at(0) as (typeof schema.chatrooms)["$inferSelect"]
+
+      roomId = chatroom.id
+
       const history =
         (await Repo.chatmessage.FindAll({
-          where: and(eq(schema.chatmessages.chatroomId, roomId), eq(schema.chatrooms.sessionId, sessionId)),
-          orderBy: [{ id: "createdAt", desc: false }],
+          where: eq(schema.chatmessages.chatroomId, roomId),
+          limit: 999,
+          orderBy: [{ id: "id", desc: false }],
         })) || []
       previousMessage = history.map((message) => ({
         source: TChatMessageSource[message.source as keyof typeof TChatMessageSource],
@@ -142,11 +171,13 @@ export class ChatUsecase implements IChatUsecase {
     } else {
       const newChatroom = (await Repo.chatroom.Create({
         sessionId,
+        name: message.substring(0, 20),
         createdAt: now,
         updatedAt: now,
       })) as (typeof schema.chatrooms)["$inferSelect"]
 
       roomId = newChatroom.id!
+      roomKey = newChatroom.key!
       await Repo.chatmessage.Create({
         chatroomId: roomId,
         message,
@@ -162,9 +193,9 @@ export class ChatUsecase implements IChatUsecase {
       message: response,
       source: TChatMessageSource.ai,
       sessionId,
-      createdAt: now,
-      updatedAt: now,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     })
-    return response
+    return roomKey
   }
 }

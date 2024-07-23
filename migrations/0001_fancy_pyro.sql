@@ -1,1 +1,0 @@
-ALTER TABLE `chatmessages` ADD `message` text;

@@ -1,9 +1,9 @@
-import type { Chat } from "@/core/entities/chat/repository"
+import type { Chat } from "@/core/entities/chat/entity"
 import type { IBaseApiRepository } from "../base/api.interface"
 
 export interface IChatRepository extends IBaseApiRepository {
   ListChat(): Promise<Chat[]>
-  GetChat(roomId?: string): Promise<Chat | undefined>
-  SendMessage({ roomId, message }: TChatSendMessagePayload): Promise<string>
+  GetChat(roomKey?: string): Promise<Chat | undefined>
+  SendMessage({ roomKey, message }: TChatSendMessagePayload): Promise<string>
 }
-export type TChatSendMessagePayload = { roomId?: string; message: string }
+export type TChatSendMessagePayload = { roomKey?: string; message: string }

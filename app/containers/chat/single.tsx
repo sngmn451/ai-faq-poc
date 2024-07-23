@@ -9,18 +9,24 @@ import { handleCommandCtrlEnter } from "@/lib/keydown"
 import { useSession } from "@/hook/useSession"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { Repo } from "@/core/repositories"
-import type { Chat } from "@/core/entities/chat/repository"
+import type { Chat } from "@/core/entities/chat/entity"
 import type { TChat, TChatMessage } from "@/core/entities/chat/interface"
 import { ArrowUp } from "lucide-react"
 import { NewChatComponent } from "@/components/chat/new"
 import { Avatar } from "@/components/primitives/avatar"
 import { differenceInDays, format, formatDistanceToNow } from "date-fns"
 import type { TChatSendMessagePayload } from "@/core/repositories/chat/interface"
+import { useNavigate } from "@tanstack/react-router"
+import { useUIStore } from "@/core/store/ui"
+import { breakpoints } from "@/core/config/responsive"
+import { useWindowSize } from "@uidotdev/usehooks"
+import { LoadingComponent } from "@/components/primitives/loading"
 
 interface Props {
-  roomId?: string
+  roomKey?: string
 }
-export function ChatRoomContainer({ roomId }: Props) {
+export function ChatRoomContainer({ roomKey }: Props) {
+  const displayChatList = useUIStore().displayChatList
   const chatBoxRef = useRef<HTMLDivElement>(null)
   const charRoomRef = useRef<HTMLDivElement>(null)
   const { data: responsive, set: setResponsive } = useResponsiveStore()
@@ -48,45 +54,66 @@ export function ChatRoomContainer({ roomId }: Props) {
   }, [])
 
   const { data: chat, refetch } = useQuery({
-    queryKey: ["chat", roomId || ""],
+    queryKey: ["chat", roomKey || ""],
     async queryFn() {
-      return await Repo.chat.GetChat(roomId)
+      return await Repo.chat.GetChat(roomKey)
     },
   })
   const {
     mutate: sendMesage,
     isPending,
-    error,
+    error: mutationError,
   } = useMutation({
     mutationKey: ["chat"],
     mutationFn: async (message: string) => {
       const payload: TChatSendMessagePayload = { message }
-      if (roomId) {
-        payload.roomId = roomId
+      if (roomKey) {
+        payload.roomKey = roomKey
       }
-      await Repo.chat.SendMessage(payload)
-      await refetch()
+      const key = await Repo.chat.SendMessage(payload)
+      if (key !== roomKey) {
+        const navigate = useNavigate()
+        navigate({ to: `/chat/${key}` })
+      } else {
+        await refetch()
+      }
     },
   })
+  useEffect(() => {
+    refetch()
+  }, [mutationError])
   async function submitPrompt(prompt: string) {
-    await sendMesage(prompt)
+    if (!isPending) await sendMesage(prompt)
   }
   return (
     <>
       <div
         ref={charRoomRef}
-        className="p-4 flex flex-col w-full relative min-h-[100dvh]"
+        className="flex flex-col w-full relative h-[100dvh] overflow-y-auto"
         style={{
           maxHeight: `calc(100dvh-${responsive["chatbox-height"]}px)`,
         }}
       >
         {chat && (
-          <div className="flex flex-col gap-2">
+          <div
+            className="flex flex-col gap-2"
+            style={{
+              paddingBottom: `calc(${responsive["chatbox-height"]}px + 2rem)`,
+            }}
+          >
+            <div
+              className={cn(
+                !displayChatList && "pl-12",
+                " sticky top-0 p-4 z-10 bg-background/50 backdrop-blur min-h-9 flex flex-row items-center justify-start",
+              )}
+            >
+              <b>{chat.GetName()}</b>
+            </div>
             <ChatMessageList chat={chat} />
           </div>
         )}
         {!chat && <NewChatComponent />}
-        <ChatBox ref={chatBoxRef} submitPrompt={submitPrompt} />
+        <ChatBox ref={chatBoxRef} submitPrompt={submitPrompt} isPending={isPending} />
       </div>
     </>
   )
@@ -94,12 +121,15 @@ export function ChatRoomContainer({ roomId }: Props) {
 
 export interface ChatBoxProps extends React.HTMLAttributes<HTMLDivElement> {
   submitPrompt: (prompt: string) => void
+  isPending: boolean
 }
 
 type ChatBoxInput = {
   prompt: string
 }
-const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, submitPrompt, ...props }, ref) => {
+const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, submitPrompt, isPending, ...props }, ref) => {
+  const displayChatList = useUIStore().displayChatList
+  const { width } = useWindowSize()
   const { register, handleSubmit, setValue } = useForm<ChatBoxInput>({
     mode: "onSubmit",
   })
@@ -116,7 +146,11 @@ const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, sub
     <div
       {...props}
       ref={ref}
-      className={cn("rounded-lg backdrop-blur absolute w-[calc(100%-2rem)] bottom-4 p-2 bg-muted/20 shadow-md transition-[width]", className)}
+      className={cn("rounded-lg backdrop-blur fixed bottom-4 p-2 bg-muted/20 shadow-md transition-all", className)}
+      style={{
+        width: width! < breakpoints.sm ? "calc(100vw - 2rem)" : displayChatList ? "calc(100vw - 18rem)" : "calc(100vw - 2rem)",
+        left: width! < breakpoints.sm ? "1rem" : displayChatList ? "17rem" : "1rem",
+      }}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row gap-2 items-end">
         <div
@@ -132,8 +166,8 @@ const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, sub
             onKeyDown={handleCommandCtrlEnter(handleSubmit(onSubmit))}
           />
         </div>
-        <Button size={"icon"} className="rounded-full w-9 h-9 aspect-square">
-          <ArrowUp />
+        <Button size={"icon"} className="rounded-full w-9 h-9 aspect-square items-center justify-center" disabled={isPending}>
+          {isPending ? <LoadingComponent showMessage={false} /> : <ArrowUp />}
         </Button>
       </form>
     </div>
@@ -142,12 +176,11 @@ const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, sub
 
 export function ChatMessageList({ chat }: { chat: Chat }) {
   return (
-    <>
-      {/* {JSON.stringify(chats)} */}
+    <div className="px-4">
       {chat.GetMessages().map((message, index) => (
         <ChatMessage key={index} message={message} />
       ))}
-    </>
+    </div>
   )
 }
 export function ChatMessage({ message }: { message: TChatMessage }) {

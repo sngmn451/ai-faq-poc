@@ -9,7 +9,7 @@ const api = new Hono()
 api.all("/*", SessionMiddleware)
 api.get("/", zValidator("query", ZQueryOptionSchema), ChatListHandler)
 api.get("/:key", zValidator("query", ZQueryOptionSchema), ChatListHandler)
-api.post("/:id", zValidator("json", ZChatSendMessageSchema), ChatSendMessageHandler)
+api.post("/:key", zValidator("json", ZChatSendMessageSchema), ChatSendMessageHandler)
 api.post("/", zValidator("json", ZChatSendMessageSchema), ChatSendMessageHandler)
 
 export default api

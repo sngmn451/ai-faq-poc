@@ -1,4 +1,4 @@
-import { Chat } from "@/core/entities/chat/repository"
+import { Chat } from "@/core/entities/chat/entity"
 import type { IChatRepository, TChatSendMessagePayload } from "./interface"
 import { BaseApiRepository } from "../base/api.repository"
 import { Get, Post } from "@/lib/fetch"
@@ -14,7 +14,8 @@ export class ChatRepository extends BaseApiRepository implements IChatRepository
         (chat) =>
           new Chat({
             id: chat.id,
-            roomId: chat.key,
+            key: chat.key,
+            name: chat.name,
             timestamp: new Date(chat.updatedAt),
             messages: chat.messages.map((message) => ({
               source: message.source,
@@ -25,41 +26,45 @@ export class ChatRepository extends BaseApiRepository implements IChatRepository
           }),
       )
   }
-  async GetChat(roomId?: string) {
-    if (roomId) {
-      const chat = (await Get<ApiResponse<TChatResponse>>(this.baseUrl + "/chats/" + roomId)).parsedBody?.data as TChatResponse
-      console.log({ chat })
+  async GetChat(roomKey?: string) {
+    if (roomKey) {
+      const chat = (await Get<ApiResponse<TChatResponse>>(this.baseUrl + "/chats/" + roomKey)).parsedBody?.data as TChatResponse
       return new Chat({
         id: chat.id,
-        roomId: chat.key,
+        key: chat.key,
+        name: chat.name,
         timestamp: new Date(chat.updatedAt),
-        messages: chat.messages.map((message) => ({
-          source: message.source,
-          content: message.message,
-          timestamp: new Date(message.updatedAt),
-          meta: message.meta,
-        })),
+        messages: chat.messages
+          .sort((a, b) => a.id - b.id)
+          .map((message) => ({
+            source: message.source,
+            content: message.message,
+            timestamp: new Date(message.updatedAt),
+            meta: message.meta,
+          })),
       })
     }
   }
-  async SendMessage({ roomId, message }: TChatSendMessagePayload) {
-    const response = (await Post<ApiResponse<TChatSendMessageResponse>>(this.baseUrl + (roomId ? `/chats/${roomId}` : "/chats"), { message }))
+  async SendMessage({ roomKey, message }: TChatSendMessagePayload) {
+    const response = (await Post<ApiResponse<TChatSendMessageResponse>>(this.baseUrl + (roomKey ? `/chats/${roomKey}` : "/chats"), { message }))
       .parsedBody?.data as TChatSendMessageResponse
-    return response.message
+    return response.key
   }
 }
 
 type TChatSendMessageResponse = {
-  message: string
+  key: string
 }
 type TChatResponse = {
   id: number
   key: string
+  name: string
   createdAt: string
   updatedAt: string
   messages: TChatMessageResponse[]
 }
 type TChatMessageResponse = {
+  id: number
   source: "human" | "ai"
   message: string
   createdAt: string

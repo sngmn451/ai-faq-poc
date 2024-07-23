@@ -1,0 +1,342 @@
+[
+  {
+    "question": "What is Intercom?",
+    "answer": "Intercom is a customer messaging platform that allows businesses to communicate with customers via live chat, email, and in-app messaging."
+  },
+  {
+    "question": "How do I install Intercom on my website?",
+    "answer": "To install Intercom on your website, sign up for an account, copy the provided JavaScript code snippet, and paste it into the HTML of your website before the closing </body> tag."
+  },
+  {
+    "question": "How can I customize the Intercom Messenger?",
+    "answer": "You can customize the Intercom Messenger through the Intercom dashboard. Go to Settings > Messenger to change the appearance, add custom greetings, and set up automated messages."
+  },
+  {
+    "question": "What is the difference between Intercom Inbox and Intercom Messages?",
+    "answer": "Intercom Inbox is where you manage all customer conversations, while Intercom Messages is used to send targeted messages to customers based on their behavior and attributes."
+  },
+  {
+    "question": "How can I integrate Intercom with other tools?",
+    "answer": "Intercom integrates with various tools such as Slack, Salesforce, and HubSpot. You can find and configure these integrations in the Intercom App Store within your Intercom dashboard."
+  },
+  {
+    "question": "How do I use Intercom to segment my customers?",
+    "answer": "You can segment your customers in Intercom by using filters based on user attributes, events, and behavior. Go to the 'People' section and apply filters to create segments."
+  },
+  {
+    "question": "What is Intercom's pricing model?",
+    "answer": "Intercom's pricing is based on the number of active users and the features you need. There are different plans available, including Starter, Pro, and Enterprise."
+  },
+  {
+    "question": "Can I use Intercom for customer support?",
+    "answer": "Yes, Intercom is widely used for customer support. It provides features like live chat, ticketing, and automation to help manage and resolve customer issues efficiently."
+  },
+  {
+    "question": "How do I measure the performance of my Intercom messages?",
+    "answer": "You can measure the performance of your Intercom messages by accessing the 'Reports' section in the dashboard. Here you can view metrics like open rates, click-through rates, and response rates."
+  },
+  {
+    "question": "Does Intercom offer a mobile SDK?",
+    "answer": "Yes, Intercom offers a mobile SDK for both iOS and Android. This allows you to integrate Intercom's messaging and support features into your mobile app."
+  },
+  {
+    "question": "What is an Intercom workspace?",
+    "answer": "An Intercom workspace is the central hub where your team can manage customer conversations, create and send messages, and access all Intercom features."
+  },
+  {
+    "question": "How do I add team members to my Intercom workspace?",
+    "answer": "To add team members to your Intercom workspace, go to Settings > Teammates and click 'Add Teammates'. Enter their email addresses and assign roles."
+  },
+  {
+    "question": "What roles can I assign to teammates in Intercom?",
+    "answer": "In Intercom, you can assign roles such as Admin, Member, and Custom roles with specific permissions tailored to your team's needs."
+  },
+  {
+    "question": "Can I schedule messages in Intercom?",
+    "answer": "Yes, you can schedule messages in Intercom. When creating a message, select the 'Schedule' option to choose a specific date and time for your message to be sent."
+  },
+  {
+    "question": "What are Intercom's bots and how do they work?",
+    "answer": "Intercom's bots, such as Resolution Bot and Custom Bots, automate responses to common questions and guide users through workflows to resolve their issues quickly."
+  },
+  {
+    "question": "How do I set up automated workflows in Intercom?",
+    "answer": "You can set up automated workflows in Intercom using Custom Bots or the Series feature. Create a series of actions and conditions to automate tasks and messages."
+  },
+  {
+    "question": "What is Intercom's Series feature?",
+    "answer": "Intercom's Series feature allows you to create multi-step workflows that automate messaging and actions based on user behavior and attributes."
+  },
+  {
+    "question": "How do I import users into Intercom?",
+    "answer": "To import users into Intercom, go to the 'People' section and click 'Import'. You can upload a CSV file or connect to a third-party service to import user data."
+  },
+  {
+    "question": "Can I export data from Intercom?",
+    "answer": "Yes, you can export data from Intercom. Go to the 'Reports' section and select the data you want to export. You can export it as a CSV file for further analysis."
+  },
+  {
+    "question": "What are Intercom's tags and how do I use them?",
+    "answer": "Tags in Intercom help you categorize and organize conversations, users, and companies. You can create and apply tags to easily filter and manage your data."
+  },
+  {
+    "question": "How do I set up Intercom product tours?",
+    "answer": "To set up product tours in Intercom, go to the 'Product Tours' section, create a new tour, and add steps with messages and actions to guide users through your product."
+  },
+  {
+    "question": "What is Intercom's Articles feature?",
+    "answer": "Intercom's Articles feature allows you to create and manage a knowledge base of help articles that users can search and access to find answers to their questions."
+  },
+  {
+    "question": "How do I create an article in Intercom?",
+    "answer": "To create an article in Intercom, go to the 'Articles' section, click 'New Article', and use the editor to add content, images, and links. Save and publish your article when ready."
+  },
+  {
+    "question": "Can I use Intercom for email marketing?",
+    "answer": "Yes, Intercom can be used for email marketing. You can create targeted email campaigns and automate follow-ups based on user behavior and attributes."
+  },
+  {
+    "question": "How do I set up email templates in Intercom?",
+    "answer": "To set up email templates in Intercom, go to the 'Messages' section, create a new message, and save it as a template for future use. Customize the content and design as needed."
+  },
+  {
+    "question": "What are Intercom's user attributes?",
+    "answer": "User attributes in Intercom are data points that describe your users, such as name, email, company, location, and custom attributes specific to your business."
+  },
+  {
+    "question": "How do I add custom attributes in Intercom?",
+    "answer": "To add custom attributes in Intercom, go to Settings > Attributes, and click 'Add Attribute'. Define the attribute name, type, and description, then save it."
+  },
+  {
+    "question": "What is the difference between users and leads in Intercom?",
+    "answer": "In Intercom, users are individuals who have signed up for your product or service, while leads are potential customers who have shown interest but haven't signed up yet."
+  },
+  {
+    "question": "How do I convert leads to users in Intercom?",
+    "answer": "To convert leads to users in Intercom, engage with them through targeted messages and follow-ups, and provide them with relevant information and offers to encourage sign-up."
+  },
+  {
+    "question": "How do I manage conversations in Intercom?",
+    "answer": "Manage conversations in Intercom through the Inbox, where you can assign conversations to teammates, use tags, and respond to messages using saved replies and automation."
+  },
+  {
+    "question": "What are saved replies in Intercom?",
+    "answer": "Saved replies in Intercom are pre-written responses to common questions that you can use to quickly respond to customers. Create and manage them in the Inbox settings."
+  },
+  {
+    "question": "How do I set up Intercom to handle different languages?",
+    "answer": "Intercom supports multiple languages. Go to Settings > Messenger > Languages to add and manage languages. Customize messages and articles for each language."
+  },
+  {
+    "question": "Can I use Intercom to track user events?",
+    "answer": "Yes, you can track user events in Intercom by using the Intercom API to send event data. This helps you understand user behavior and trigger targeted messages."
+  },
+  {
+    "question": "What is the Intercom API and how do I use it?",
+    "answer": "The Intercom API allows you to programmatically interact with Intercom's features. You can use it to manage users, conversations, messages, and more. Find documentation on Intercom's website."
+  },
+  {
+    "question": "How do I set up automated messages in Intercom?",
+    "answer": "Set up automated messages in Intercom by creating a new message, selecting the audience and trigger conditions, and scheduling it to send automatically based on user actions."
+  },
+  {
+    "question": "What are the benefits of using Intercom's live chat?",
+    "answer": "Intercom's live chat allows you to provide real-time support to customers, improve customer satisfaction, and increase engagement and conversions on your website."
+  },
+  {
+    "question": "How do I enable push notifications in Intercom?",
+    "answer": "To enable push notifications in Intercom, integrate the Intercom mobile SDK into your app, configure notification settings, and send targeted push notifications to users."
+  },
+  {
+    "question": "What is the Intercom Operator bot?",
+    "answer": "Intercom Operator is a bot that automates repetitive tasks, such as routing conversations, collecting information, and sending follow-up messages to improve efficiency."
+  },
+  {
+    "question": "How do I set up Intercom Operator?",
+    "answer": "Set up Intercom Operator by going to the 'Operator' section in the dashboard. Configure rules and workflows to automate tasks and streamline your support process."
+  },
+  {
+    "question": "What are Intercom's conversation ratings?",
+    "answer": "Conversation ratings in Intercom allow customers to rate their support experience. You can enable this feature to collect feedback and improve your support quality."
+  },
+  {
+    "question": "How do I enable conversation ratings in Intercom?",
+    "answer": "Enable conversation ratings by going to Settings > Messenger > Conversation Ratings. Toggle the feature on and customize the rating options and follow-up messages."
+  },
+  {
+    "question": "What is Intercom's SLA feature?",
+    "answer": "Intercom's SLA (Service Level Agreement) feature helps you set and track response and resolution times for customer conversations to ensure timely support."
+  },
+  {
+    "question": "How do I set up SLAs in Intercom?",
+    "answer": "Set up SLAs in Intercom by going to Settings > SLAs. Define your SLA policies, including response and resolution times, and apply them to specific conversations or customer segments."
+  },
+  {
+    "question": "Can I use Intercom for lead generation?",
+    "answer": "Yes, Intercom can be used for lead generation. Use targeted messages, live chat, and bots to engage website visitors and capture their information as leads."
+  },
+  {
+    "question": "How do I create a lead capture form in Intercom?",
+    "answer": "Create a lead capture form in Intercom by using Custom Bots. Design a bot that asks for visitor information and saves it as leads in your Intercom workspace."
+  },
+  {
+    "question": "What is Intercom's Outbound Messages feature?",
+    "answer": "Intercom's Outbound Messages feature allows you to send targeted messages to users via email, in-app, or push notifications based on their behavior and attributes."
+  },
+  {
+    "question": "How do I create an outbound message in Intercom?",
+    "answer": "Create an outbound message by going to the 'Messages' section, selecting the message type, defining the audience and trigger conditions, and crafting your message content."
+  },
+  {
+    "question": "What are Intercom's User Segments?",
+    "answer": "User Segments in Intercom are groups of users defined by specific criteria, such as attributes, behavior, and events. Use segments to target messages and analyze user groups."
+  },
+  {
+    "question": "How do I create a user segment in Intercom?",
+    "answer": "Create a user segment by going to the 'People' section, applying filters based on attributes and events, and saving the filtered list as a segment for future use."
+  },
+  {
+    "question": "What is Intercom's Product Tours feature?",
+    "answer": "Intercom's Product Tours feature helps you create guided tours within your app to onboard new users, highlight features, and improve user adoption."
+  },
+  {
+    "question": "How do I create a product tour in Intercom?",
+    "answer": "Create a product tour by going to the 'Product Tours' section, clicking 'New Tour', and adding steps with messages and actions to guide users through your product."
+  },
+  {
+    "question": "What is Intercom's Resolution Bot?",
+    "answer": "Intercom's Resolution Bot is an automated bot that answers common customer questions and resolves issues based on predefined answers and workflows."
+  },
+  {
+    "question": "How do I set up the Resolution Bot in Intercom?",
+    "answer": "Set up the Resolution Bot by going to the 'Operator' section, configuring the bot's responses to common questions, and enabling it to handle conversations automatically."
+  },
+  {
+    "question": "Can I track customer satisfaction in Intercom?",
+    "answer": "Yes, you can track customer satisfaction in Intercom by using conversation ratings and customer feedback surveys. Analyze the data to improve your support services."
+  },
+  {
+    "question": "How do I create a customer satisfaction survey in Intercom?",
+    "answer": "Create a customer satisfaction survey by going to the 'Messages' section, selecting 'New Survey', and designing your survey questions and response options."
+  },
+  {
+    "question": "What is Intercom's Help Center?",
+    "answer": "Intercom's Help Center is a self-service portal where customers can find articles, guides, and FAQs to help them resolve issues without contacting support."
+  },
+  {
+    "question": "How do I set up a Help Center in Intercom?",
+    "answer": "Set up a Help Center by going to the 'Help Center' section, creating categories and articles, and customizing the design and layout to match your brand."
+  },
+  {
+    "question": "Can I use Intercom for customer onboarding?",
+    "answer": "Yes, Intercom can be used for customer onboarding. Use product tours, targeted messages, and automated workflows to guide new users through your product."
+  },
+  {
+    "question": "How do I create an onboarding sequence in Intercom?",
+    "answer": "Create an onboarding sequence by using the Series feature to design a multi-step workflow that sends messages and guides users through key actions in your product."
+  },
+  {
+    "question": "What is Intercom's Custom Bot?",
+    "answer": "Intercom's Custom Bot is a tool that allows you to create personalized bot workflows to automate interactions, capture leads, and resolve customer inquiries."
+  },
+  {
+    "question": "How do I create a Custom Bot in Intercom?",
+    "answer": "Create a Custom Bot by going to the 'Operator' section, selecting 'New Custom Bot', and designing the bot's workflow with messages, actions, and conditions."
+  },
+  {
+    "question": "What is Intercom's Inbox feature?",
+    "answer": "Intercom's Inbox feature is a unified interface where you can manage all customer conversations, assign messages to teammates, and use automation to streamline support."
+  },
+  {
+    "question": "How do I use the Intercom Inbox effectively?",
+    "answer": "Use the Intercom Inbox effectively by organizing conversations with tags, assigning messages to the right teammates, and using saved replies and automation to handle common questions."
+  },
+  {
+    "question": "What are Intercom's team inboxes?",
+    "answer": "Team inboxes in Intercom allow different teams to manage their own conversations separately. Set up team inboxes for sales, support, and other departments."
+  },
+  {
+    "question": "How do I set up team inboxes in Intercom?",
+    "answer": "Set up team inboxes by going to Settings > Inboxes, creating new inboxes for each team, and configuring the settings and permissions for each inbox."
+  },
+  {
+    "question": "What are Intercom's webhooks?",
+    "answer": "Intercom's webhooks allow you to receive real-time notifications about events in your Intercom account, such as new conversations or user updates."
+  },
+  {
+    "question": "How do I set up webhooks in Intercom?",
+    "answer": "Set up webhooks by going to Settings > Webhooks, creating a new webhook, and configuring the URL and event types you want to receive notifications for."
+  },
+  {
+    "question": "Can I integrate Intercom with my CRM?",
+    "answer": "Yes, Intercom integrates with various CRM systems such as Salesforce, HubSpot, and more. Set up the integration through the Intercom App Store."
+  },
+  {
+    "question": "How do I integrate Intercom with Salesforce?",
+    "answer": "Integrate Intercom with Salesforce by going to the Intercom App Store, finding the Salesforce app, and following the setup instructions to connect your accounts."
+  },
+  {
+    "question": "What is Intercom's People section?",
+    "answer": "The People section in Intercom is where you manage your users and leads. View and filter user profiles, segment users, and analyze user data."
+  },
+  {
+    "question": "How do I filter users in the People section?",
+    "answer": "Filter users in the People section by applying filters based on attributes, events, and behavior. Save the filtered list as a segment for future use."
+  },
+  {
+    "question": "What are Intercom's custom actions?",
+    "answer": "Custom actions in Intercom allow you to create specific actions that can be triggered in workflows, such as sending data to an external service or updating user attributes."
+  },
+  {
+    "question": "How do I create custom actions in Intercom?",
+    "answer": "Create custom actions by using the Intercom API to define the actions and integrate them into your workflows and automations."
+  },
+  {
+    "question": "Can I use Intercom for customer feedback?",
+    "answer": "Yes, Intercom can be used to collect customer feedback through surveys, conversation ratings, and direct messages. Analyze the feedback to improve your product and support."
+  },
+  {
+    "question": "How do I create a feedback survey in Intercom?",
+    "answer": "Create a feedback survey by going to the 'Messages' section, selecting 'New Survey', and designing your survey questions and response options."
+  },
+  {
+    "question": "What is Intercom's Engage feature?",
+    "answer": "Intercom's Engage feature allows you to send targeted, personalized messages to users based on their behavior and attributes to drive engagement and retention."
+  },
+  {
+    "question": "How do I use Intercom Engage?",
+    "answer": "Use Intercom Engage by creating campaigns that target specific user segments with messages designed to encourage actions, such as completing onboarding or using new features."
+  },
+  {
+    "question": "Can I automate Intercom messages?",
+    "answer": "Yes, you can automate Intercom messages by using the Series feature, Custom Bots, and other automation tools to send messages based on user behavior and conditions."
+  },
+  {
+    "question": "How do I set up message automation in Intercom?",
+    "answer": "Set up message automation by creating workflows in the Series feature, defining trigger conditions, and designing messages that will be sent automatically based on those conditions."
+  },
+  {
+    "question": "What are Intercom's user events?",
+    "answer": "User events in Intercom are actions that users take within your product, such as signing up, making a purchase, or completing a task. Track events to understand user behavior."
+  },
+  {
+    "question": "How do I track user events in Intercom?",
+    "answer": "Track user events by using the Intercom API to send event data from your product to Intercom. Use this data to trigger messages and analyze user behavior."
+  },
+  {
+    "question": "What is Intercom's Reports feature?",
+    "answer": "Intercom's Reports feature provides analytics and insights into your customer interactions, message performance, user behavior, and more."
+  },
+  {
+    "question": "How do I access reports in Intercom?",
+    "answer": "Access reports by going to the 'Reports' section in the dashboard. View and customize reports to track key metrics and analyze your performance."
+  },
+  {
+    "question": "Can I customize Intercom's messenger?",
+    "answer": "Yes, you can customize Intercom's messenger by changing its appearance, adding custom greetings, and setting up automated messages through the Messenger settings."
+  },
+  {
+    "question": "How do I customize the messenger in Intercom?",
+    "answer": "Customize the messenger by going to Settings > Messenger, selecting the customization options, and configuring the design, greetings, and automated messages."
+  }
+]

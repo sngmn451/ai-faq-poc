@@ -4,13 +4,13 @@ import type { TRestApiListChildResponseSchema, TRestApiListResponseSchema, TRest
 
 export interface IChatUsecase {
   ListChatrooms(sessionId: string, params: TQueryOption, key?: string): Promise<TRestApiListResponseSchema<Chat>>
-  GetChatroom(id: number, params: TQueryOption): Promise<TRestApiResponse<Chat>>
-  LoadChatMessages(chatroomId: number, params: TQueryOption): Promise<TRestApiListChildResponseSchema<Chat>>
-  SendMessage({ chatroomId, sessionId, message }: TChatUcSendMessage): Promise<string>
+  GetChatroom(key: string, params: TQueryOption): Promise<TRestApiResponse<Chat>>
+  LoadChatMessages(key: string, params: TQueryOption): Promise<TRestApiListChildResponseSchema<Chat>>
+  SendMessage({ key, sessionId, message }: TChatUcSendMessage): Promise<string>
 }
 
 export type TChatUcSendMessage = {
-  chatroomId?: number
+  key?: string
   sessionId: string
   message: string
 }

@@ -2,6 +2,7 @@ CREATE TABLE `chatmessages` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`source` text NOT NULL,
 	`chatroom_id` integer NOT NULL,
+	`message` text,
 	`session_id` text,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
@@ -13,11 +14,22 @@ CREATE TABLE `chatmessages` (
 CREATE TABLE `chatrooms` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`key` text NOT NULL,
+	`name` text NOT NULL,
 	`session_id` text NOT NULL,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
 	`deleted_at` integer,
 	FOREIGN KEY (`session_id`) REFERENCES `sessions`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE TABLE `faqs` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`question` text NOT NULL,
+	`answer` text NOT NULL,
+	`embedding` text NOT NULL,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL,
+	`deleted_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `sessions` (
@@ -30,4 +42,6 @@ CREATE INDEX `idxChatmessagesSessionId` ON `chatmessages` (`id`,`session_id`);--
 CREATE UNIQUE INDEX `chatrooms_id_unique` ON `chatrooms` (`id`);--> statement-breakpoint
 CREATE UNIQUE INDEX `chatrooms_key_unique` ON `chatrooms` (`key`);--> statement-breakpoint
 CREATE INDEX `idxChatroomSessionId` ON `chatrooms` (`id`,`session_id`);--> statement-breakpoint
+CREATE INDEX `keyChatroomSessionId` ON `chatrooms` (`key`,`session_id`);--> statement-breakpoint
+CREATE UNIQUE INDEX `faqs_id_unique` ON `faqs` (`id`);--> statement-breakpoint
 CREATE UNIQUE INDEX `sessions_id_unique` ON `sessions` (`id`);

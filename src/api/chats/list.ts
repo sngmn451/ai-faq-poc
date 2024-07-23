@@ -8,7 +8,7 @@ export async function ChatListHandler(context: Context) {
   // @ts-ignore
   const query = context.req.valid("query") as TQueryOptionSchema
   const key = context.req.param("key") ? context.req.param("key") : undefined
-  console.log({ key, query })
+
   const session = getCookie(context, SESSION_KEY)
   const response = await Uc.chat.ListChatrooms(session!, query, key!)
 

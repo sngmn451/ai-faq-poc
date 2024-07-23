@@ -14,7 +14,7 @@ import { Route as rootRoute } from "./routes/__root"
 import { Route as ChatImport } from "./routes/chat"
 import { Route as IndexImport } from "./routes/index"
 import { Route as ChatIndexImport } from "./routes/chat.index"
-import { Route as ChatRoomIdImport } from "./routes/chat.$roomId"
+import { Route as ChatRoomKeyImport } from "./routes/chat.$roomKey"
 
 // Create/Update Routes
 
@@ -33,8 +33,8 @@ const ChatIndexRoute = ChatIndexImport.update({
   getParentRoute: () => ChatRoute,
 } as any)
 
-const ChatRoomIdRoute = ChatRoomIdImport.update({
-  path: "/$roomId",
+const ChatRoomKeyRoute = ChatRoomKeyImport.update({
+  path: "/$roomKey",
   getParentRoute: () => ChatRoute,
 } as any)
 
@@ -56,11 +56,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ChatImport
       parentRoute: typeof rootRoute
     }
-    "/chat/$roomId": {
-      id: "/chat/$roomId"
-      path: "/$roomId"
-      fullPath: "/chat/$roomId"
-      preLoaderRoute: typeof ChatRoomIdImport
+    "/chat/$roomKey": {
+      id: "/chat/$roomKey"
+      path: "/$roomKey"
+      fullPath: "/chat/$roomKey"
+      preLoaderRoute: typeof ChatRoomKeyImport
       parentRoute: typeof ChatImport
     }
     "/chat/": {
@@ -77,7 +77,7 @@ declare module "@tanstack/react-router" {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  ChatRoute: ChatRoute.addChildren({ ChatRoomIdRoute, ChatIndexRoute }),
+  ChatRoute: ChatRoute.addChildren({ ChatRoomKeyRoute, ChatIndexRoute }),
 })
 
 /* prettier-ignore-end */
@@ -98,12 +98,12 @@ export const routeTree = rootRoute.addChildren({
     "/chat": {
       "filePath": "chat.tsx",
       "children": [
-        "/chat/$roomId",
+        "/chat/$roomKey",
         "/chat/"
       ]
     },
-    "/chat/$roomId": {
-      "filePath": "chat.$roomId.tsx",
+    "/chat/$roomKey": {
+      "filePath": "chat.$roomKey.tsx",
       "parent": "/chat"
     },
     "/chat/": {
