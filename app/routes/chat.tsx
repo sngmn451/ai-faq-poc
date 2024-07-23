@@ -28,8 +28,8 @@ function Component() {
     <div className="w-full flex flex-row flex-1 relative">
       <div
         className={cn(
-          displayChatList ? "sm:w-56" : "w-auto",
-          "absolute top-4 left-4 z-50",
+          displayChatList ? "sm:w-[15.925rem]" : "w-auto",
+          "absolute top-0 left-0 bg-background p-4 pb-2 z-50 mb-2",
           " flex flex-row items-center justify-between gap-2",
         )}
       >

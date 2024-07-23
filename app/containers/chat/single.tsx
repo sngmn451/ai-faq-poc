@@ -108,7 +108,7 @@ export function ChatRoomContainer({ roomKey }: Props) {
             <div
               className={cn(
                 " sticky top-0 p-4 z-10 bg-background/50 backdrop-blur min-h-[4.25rem] flex flex-row items-center justify-start",
-                !displayChatList && "pl-16",
+                !displayChatList && "pl-[4.5rem]",
               )}
             >
               <b>{chat.GetName()}</b>

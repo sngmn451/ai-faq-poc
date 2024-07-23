@@ -30,7 +30,7 @@ export function ChatListContainer() {
             <b>FAQ AI Bot</b>
           </AlertTitle>
           <AlertDescription>
-            <p>Demo project using GPT-4o-mini to create AI chat bot to find the best answer for your question in FAQ knowledge based.</p>
+            <p>AI powered chat bot to find the best answer for your question in FAQ knowledge based.</p>
             <div className="h-2" />
             <Dialog>
               <DialogTrigger className="text-primary hover:underline">View mock data</DialogTrigger>
@@ -49,6 +49,12 @@ export function ChatListContainer() {
                 </div>
               </DialogContent>
             </Dialog>
+            <p className="text-xs pt-1 text-muted-foreground">
+              Made with ♥️ by{" "}
+              <a href="https://sittipong.com" className="text-[#477eff] underline underline-offset-2">
+                Sittipong
+              </a>
+            </p>
           </AlertDescription>
         </Alert>
       </div>
