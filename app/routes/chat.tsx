@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { createFileRoute, Outlet } from "@tanstack/react-router"
-import { useEffect, useState } from "react"
-import { PanelLeft, Pencil } from "lucide-react"
+import { useEffect } from "react"
+import { PanelLeft } from "lucide-react"
 import { ChatListContainer } from "@/containers/chat/list"
 import { useWindowSize } from "@uidotdev/usehooks"
 

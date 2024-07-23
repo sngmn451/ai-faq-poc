@@ -18,14 +18,12 @@ class preload {
     this.list = this.list.filter((item) => item.url !== url)
   }
   all() {
-    return this.list.map((item) => (
-      <link rel="preload" href={item.url} as={item.as} />
-    ))
+    return this.list.map((item) => <link rel="preload" href={item.url} as={item.as} />)
   }
 }
 class prefetch {
   constructor(private urls: string[] = []) {}
-  add(url: string, type: string) {
+  add(url: string) {
     this.urls.push(url)
   }
   remove(url: string) {

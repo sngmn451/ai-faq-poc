@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils"
 import { useQuery } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
 import { useWindowSize } from "@uidotdev/usehooks"
-import { Check, Cross, MoreHorizontal, X } from "lucide-react"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Check, MoreHorizontal, X } from "lucide-react"
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { ChatDataContainer } from "./data"
 import { Lightbulb } from "lucide-react"
 import type { Chat } from "@/core/entities/chat/entity"
@@ -81,7 +81,7 @@ function ChatListItem({ chat }: { chat: Chat }) {
   const setDisplayChatList = useUIStore().setDisplayChatList
   const [isRename, setIsRename] = useState<boolean>(false)
 
-  const { register, handleSubmit, formState, setValue } = useForm<ChatRenameInput>({
+  const { register, handleSubmit, formState } = useForm<ChatRenameInput>({
     mode: "onSubmit",
     defaultValues: { name: chat.GetName() },
   })
