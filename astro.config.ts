@@ -30,6 +30,7 @@ export default defineConfig({
         tls: "node:tls",
         http: "node:http",
         events: "node:events",
+        url: "node:url",
       },
     },
   },
