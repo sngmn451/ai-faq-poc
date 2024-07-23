@@ -150,7 +150,7 @@ const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, sub
     <div
       {...props}
       ref={ref}
-      className={cn("rounded-lg backdrop-blur fixed bottom-4 p-2 bg-muted/20 shadow-md transition-all", className)}
+      className={cn("rounded-lg backdrop-blur fixed bottom-4 p-2 bg-muted/20 shadow-md transition-all border", className)}
       style={{
         width: width! < breakpoints.sm ? "calc(100vw - 2rem)" : displayChatList ? "calc(100vw - 18rem)" : "calc(100vw - 2rem)",
         left: width! < breakpoints.sm ? "1rem" : displayChatList ? "17rem" : "1rem",
