@@ -20,4 +20,9 @@ export class Chat implements IChat {
   Rename(name: string) {
     this.chat.name = name
   }
+  AddLastMessage(message: TChatMessage) {
+    const messages = this.chat.messages
+    messages.push(message)
+    this.chat.messages = messages.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+  }
 }

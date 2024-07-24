@@ -74,6 +74,11 @@ export function ChatRoomContainer({ roomKey }: Props) {
       if (roomKey) {
         payload.roomKey = roomKey
       }
+      chat?.AddLastMessage({
+        source: "human",
+        content: message,
+        timestamp: new Date(),
+      })
       const key = await Repo.chat.SendMessage(payload)
       console.log({ key, roomKey })
       if (key !== roomKey) {
