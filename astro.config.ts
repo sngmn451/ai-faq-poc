@@ -45,6 +45,7 @@ export default defineConfig({
       },
     },
     build: {
+      minify: false,
       rollupOptions: {
         external: [
           "cloudflare:sockets",
