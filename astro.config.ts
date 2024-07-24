@@ -72,6 +72,7 @@ export default defineConfig({
       "process.env.OPENAI_KEY": JSON.stringify(process.env.OPENAI_KEY),
       "process.env.OPENAI_PROJECT_ID": JSON.stringify(process.env.OPENAI_PROJECT_ID),
       "process.env.OPENAI_ORG_ID": JSON.stringify(process.env.OPENAI_ORG_ID),
+      "process.env.GCT_CREDENTIAL": JSON.stringify(process.env.GCT_CREDENTIAL),
     },
   },
 })
