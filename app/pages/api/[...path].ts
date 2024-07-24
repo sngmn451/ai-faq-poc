@@ -1,7 +1,7 @@
 import Api from "~/server"
 import type { APIRoute } from "astro"
 
-const ApiHandler: APIRoute = ({ request, locals }) => Api.fetch(request, locals.runtime.env)
+const ApiHandler: APIRoute = ({ request, locals }) => Api.fetch(request, locals.netlify.context)
 
 export {
   ApiHandler as GET,
