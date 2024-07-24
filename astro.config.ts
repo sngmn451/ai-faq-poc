@@ -67,11 +67,11 @@ export default defineConfig({
       },
     },
     define: {
-      "process.env.DB_URL": process.env.DB_URL,
-      "process.env.DB_AUTHTOKEN": process.env.DB_AUTHTOKEN,
-      "process.env.OPENAI_KEY": process.env.OPENAI_KEY,
-      "process.env.OPENAI_PROJECT_ID": process.env.OPENAI_PROJECT_ID,
-      "process.env.OPENAI_ORG_ID": process.env.OPENAI_ORG_ID,
+      "process.env.DB_URL": JSON.stringify(process.env.DB_URL),
+      "process.env.DB_AUTHTOKEN": JSON.stringify(process.env.DB_AUTHTOKEN),
+      "process.env.OPENAI_KEY": JSON.stringify(process.env.OPENAI_KEY),
+      "process.env.OPENAI_PROJECT_ID": JSON.stringify(process.env.OPENAI_PROJECT_ID),
+      "process.env.OPENAI_ORG_ID": JSON.stringify(process.env.OPENAI_ORG_ID),
     },
   },
 })
