@@ -66,6 +66,6 @@
     "drizzle-kit": "^0.23.0",
     "esbuild": "^0.23.0",
     "tsx": "^4.16.2",
-    "vite-plugin-cloudflare": "^0.4.1"
+    "vite-plugin-node-polyfills": "^0.22.0"
   }
 }

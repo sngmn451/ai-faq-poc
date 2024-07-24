@@ -3,7 +3,7 @@ import react from "@astrojs/react"
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 import tailwind from "@astrojs/tailwind"
 import cloudflare from "@astrojs/cloudflare"
-import vpc from "vite-plugin-cloudflare"
+import { nodePolyfills } from "vite-plugin-node-polyfills"
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,7 +24,7 @@ export default defineConfig({
         quoteStyle: "double",
         semicolons: false,
       }),
-      vpc({ scriptPath: "./worker/index.ts" }),
+      nodePolyfills(),
     ],
     resolve: {
       alias: {
