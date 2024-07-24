@@ -83,15 +83,9 @@ importers:
       franc-all:
         specifier: ^7.2.0
         version: 7.2.0
-      google-translate-api-x:
-        specifier: ^10.6.8
-        version: 10.6.8
       hono:
         specifier: ^4.5.0
         version: 4.5.0
-      http-proxy-agent:
-        specifier: ^7.0.2
-        version: 7.0.2
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
@@ -2915,10 +2909,6 @@ packages:
     resolution: {integrity: sha512-SKAQKtvdjtNW3PMOhmKEqpQP+2C5ZqNKfwWxy70efpSwxvRYuAcgMJs6aRHTBPJjz3SO6ZbiXwM6WIuGYFZ7LQ==}
     engines: {node: '>=14'}
 
-  google-translate-api-x@10.6.8:
-    resolution: {integrity: sha512-vlXnCQhMcy00P2uX/mK3NzJb4HBMhoKo39PSmupiiVKLgsAZp8b22OV48dcAUxykAuPxQreyBYz4P6jFCzeZjA==}
-    engines: {node: '>=14.0.0'}
-
   gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
 
@@ -3035,10 +3025,6 @@ packages:
   http-proxy-agent@5.0.0:
     resolution: {integrity: sha512-n2hY8YdoRE1i7r6M0w9DIw5GgZN0G25P8zLCRQ8rjXtTU3vsNFBI/vWK/UIeE6g5MUUz6avwAPXmL6Fy9D/90w==}
     engines: {node: '>= 6'}
-
-  http-proxy-agent@7.0.2:
-    resolution: {integrity: sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==}
-    engines: {node: '>= 14'}
 
   http-proxy@1.18.1:
     resolution: {integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==}
@@ -7471,8 +7457,6 @@ snapshots:
       - encoding
       - supports-color
 
-  google-translate-api-x@10.6.8: {}
-
   gopd@1.0.1:
     dependencies:
       get-intrinsic: 1.2.4
@@ -7646,13 +7630,6 @@ snapshots:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.5
-    transitivePeerDependencies:
-      - supports-color
-
-  http-proxy-agent@7.0.2:
-    dependencies:
-      agent-base: 7.1.1
       debug: 4.3.5
     transitivePeerDependencies:
       - supports-color

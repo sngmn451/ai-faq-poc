@@ -1,8 +1,8 @@
 import { Repo } from ".."
 import { BaseOpenAIRepository } from "../base/openai.repository"
 import type { IOpenAIFaqsRepository, TOpenAIFaqPrompt } from "./interface"
-import { translateText } from "@/lib/translate"
-import { preprocessQuery } from "@/lib/ai"
+import { translateText } from "~/lib/translate"
+import { preprocessQuery } from "~/lib/ai"
 
 const OPENAPI_MODEL = "gpt-4o-mini"
 
