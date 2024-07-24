@@ -1,4 +1,3 @@
-import { Toast } from "@/components/ui/toast"
 import { useConsent } from "@/hook/useConsent"
 import { useSession } from "@/hook/useSession"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
