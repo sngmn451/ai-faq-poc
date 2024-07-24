@@ -13,6 +13,7 @@ interface ImportMetaEnv {
   readonly OPENAI_KEY: string
   readonly OPENAI_PROJECT_ID: string
   readonly OPENAI_ORG_ID: string
+  readonly GCT_CREDENTIAL: string
 }
 
 interface ImportMeta {
