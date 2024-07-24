@@ -2,8 +2,8 @@ import { defineConfig } from "astro/config"
 import react from "@astrojs/react"
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 import tailwind from "@astrojs/tailwind"
-import cloudflare from "@astrojs/cloudflare"
 import { nodePolyfills } from "vite-plugin-node-polyfills"
+import netlify from "@astrojs/netlify"
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,7 +15,7 @@ export default defineConfig({
   ],
   srcDir: "app",
   output: "server",
-  adapter: cloudflare(),
+  adapter: netlify(),
   vite: {
     plugins: [
       TanStackRouterVite({
