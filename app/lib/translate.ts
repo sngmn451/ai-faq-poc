@@ -10,7 +10,12 @@ export async function translateText(
   text: string
 }> {
   const translator = new Translator({ to, forceBatch: false })
-  const agent = new HttpProxyAgent(proxy())
+  const isCredentialsSupported = "credentials" in Request.prototype
+  const agent = new HttpProxyAgent(proxy(), {
+    headers: {
+      credentials: isCredentialsSupported ? "include" : undefined,
+    },
+  })
   const translated = await translator.translate(text, { to, requestOptions: { agent } })
   return {
     from: translated.from.language.iso,
