@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { handleCommandCtrlEnter } from "@/lib/keydown"
 import { useSession } from "@/hook/useSession"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Repo } from "@/core/repositories"
 import type { Chat } from "@/core/entities/chat/entity"
 import type { TChatMessage } from "@/core/entities/chat/interface"
@@ -21,6 +21,7 @@ import { useUIStore } from "@/core/store/ui"
 import { breakpoints } from "@/core/config/responsive"
 import { useWindowSize } from "@uidotdev/usehooks"
 import { LoadingComponent } from "@/components/primitives/loading"
+import { nanoid } from "nanoid"
 
 interface Props {
   roomKey?: string
@@ -54,12 +55,14 @@ export function ChatRoomContainer({ roomKey }: Props) {
     }
   }, [])
 
+  const queryClient = useQueryClient()
   const { data: chat, refetch } = useQuery({
     queryKey: ["chat", roomKey || "new"],
     async queryFn() {
       if (chatRoomRef?.current) {
         chatRoomRef.current.scrollTo(0, chatRoomRef.current.scrollHeight)
       }
+      queryClient.refetchQueries({ queryKey: ["chats"], exact: true })
       return await Repo.chat.GetChat(roomKey, { limit: 999, offset: 0 })
     },
   })
@@ -124,7 +127,11 @@ export function ChatRoomContainer({ roomKey }: Props) {
           </div>
         )}
         {!chat && <NewChatComponent />}
-        <ChatBox ref={chatBoxRef} submitPrompt={submitPrompt} isPending={isPending} />
+        <ChatBox
+          ref={chatBoxRef}
+          submitPrompt={submitPrompt}
+          isPending={isPending}
+        />
       </div>
     </>
   )
@@ -138,54 +145,82 @@ export interface ChatBoxProps extends React.HTMLAttributes<HTMLDivElement> {
 type ChatBoxInput = {
   prompt: string
 }
-const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(({ className, submitPrompt, isPending, ...props }, ref) => {
-  const displayChatList = useUIStore().displayChatList
-  const { width } = useWindowSize()
-  const { register, handleSubmit, setValue } = useForm<ChatBoxInput>({
-    mode: "onSubmit",
-  })
-  const onSubmit: SubmitHandler<ChatBoxInput> = (data) => {
-    submitPrompt(data.prompt)
-    setValue("prompt", "")
-    setPrompt("")
-  }
-  const [prompt, setPrompt] = useState("")
-  function onInput(e: React.FormEvent<HTMLTextAreaElement>) {
-    setPrompt(e.currentTarget.value)
-  }
-  return (
-    <div
-      {...props}
-      ref={ref}
-      className={cn("rounded-lg backdrop-blur fixed bottom-4 p-2 bg-muted/20 shadow-md transition-all border", className)}
-      style={{
-        width: width! < breakpoints.sm ? "calc(100vw - 2rem)" : displayChatList ? "calc(100vw - 18rem)" : "calc(100vw - 2rem)",
-        left: width! < breakpoints.sm ? "1rem" : displayChatList ? "17rem" : "1rem",
-      }}
-    >
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-row gap-2 items-end">
-        <div
-          className="grid flex-1 text-sm after:pb-2 [&>textarea]:text-inherit after:text-inherit [&>textarea]:resize-none [&>textarea]:overflow-hidden [&>textarea]:overflow-y-auto [&>textarea]:[grid-area:1/1/2/2] after:[grid-area:1/1/2/2] after:whitespace-pre-wrap after:invisible after:content-[attr(data-cloned-val)_'_'] after:border after:max-h-[30vh] after:overflow-y-hidden"
-          data-cloned-val={prompt}
+const ChatBox = React.forwardRef<HTMLDivElement, ChatBoxProps>(
+  ({ className, submitPrompt, isPending, ...props }, ref) => {
+    const displayChatList = useUIStore().displayChatList
+    const { width } = useWindowSize()
+    const { register, handleSubmit, setValue } = useForm<ChatBoxInput>({
+      mode: "onSubmit",
+    })
+    const onSubmit: SubmitHandler<ChatBoxInput> = (data) => {
+      submitPrompt(data.prompt)
+      setValue("prompt", "")
+      setPrompt("")
+    }
+    const [prompt, setPrompt] = useState("")
+    function onInput(e: React.FormEvent<HTMLTextAreaElement>) {
+      setPrompt(e.currentTarget.value)
+    }
+    return (
+      <div
+        {...props}
+        ref={ref}
+        className={cn(
+          "rounded-lg backdrop-blur fixed bottom-4 p-2 bg-muted/20 shadow-md transition-all border",
+          className,
+        )}
+        style={{
+          width:
+            width! < breakpoints.sm
+              ? "calc(100vw - 2rem)"
+              : displayChatList
+                ? "calc(100vw - 18rem)"
+                : "calc(100vw - 2rem)",
+          left:
+            width! < breakpoints.sm
+              ? "1rem"
+              : displayChatList
+                ? "17rem"
+                : "1rem",
+        }}
+      >
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-row gap-2 items-end"
         >
-          <Textarea
-            rows={1}
-            placeholder="Type a message..."
-            className="border-none outline-none focus-visible:ring-0"
-            {...register("prompt", { required: true })}
-            onInput={onInput}
-            onKeyDown={handleCommandCtrlEnter(handleSubmit(onSubmit))}
-          />
-        </div>
-        <Button size={"icon"} className="rounded-full w-9 h-9 aspect-square items-center justify-center" disabled={isPending}>
-          {isPending ? <LoadingComponent showMessage={false} /> : <ArrowUp />}
-        </Button>
-      </form>
-    </div>
-  )
-})
+          <div
+            className="grid flex-1 text-sm after:pb-2 [&>textarea]:text-inherit after:text-inherit [&>textarea]:resize-none [&>textarea]:overflow-hidden [&>textarea]:overflow-y-auto [&>textarea]:[grid-area:1/1/2/2] after:[grid-area:1/1/2/2] after:whitespace-pre-wrap after:invisible after:content-[attr(data-cloned-val)_'_'] after:border after:max-h-[30vh] after:overflow-y-hidden"
+            data-cloned-val={prompt}
+          >
+            <Textarea
+              rows={1}
+              placeholder="Type a message..."
+              className="border-none outline-none focus-visible:ring-0"
+              {...register("prompt", { required: true })}
+              onInput={onInput}
+              onKeyDown={handleCommandCtrlEnter(handleSubmit(onSubmit))}
+            />
+          </div>
+          <Button
+            size={"icon"}
+            className="rounded-full w-9 h-9 aspect-square items-center justify-center"
+            disabled={isPending}
+          >
+            {isPending ? <LoadingComponent showMessage={false} /> : <ArrowUp />}
+          </Button>
+        </form>
+      </div>
+    )
+  },
+)
 
-export function ChatMessageList({ chat, isPending }: { chat: Chat; isPending: boolean }) {
+export function ChatMessageList({
+  chat,
+  isPending,
+}: {
+  chat: Chat
+  isPending: boolean
+}) {
   return (
     <div className="px-4">
       {chat.GetMessages().map((message, index) => (
@@ -195,7 +230,11 @@ export function ChatMessageList({ chat, isPending }: { chat: Chat; isPending: bo
     </div>
   )
 }
-function ChatMessageAIThinking({ message = "Finding your best answer..." }: { message?: string }) {
+function ChatMessageAIThinking({
+  message = "Finding your best answer...",
+}: {
+  message?: string
+}) {
   return (
     <div className={cn("flex flex-row gap-4")}>
       <Avatar alt={"AI"} />
@@ -216,7 +255,12 @@ export function ChatMessage({ message }: { message: TChatMessage }) {
     return () => clearInterval(interval)
   }, [])
   return (
-    <div className={cn("flex flex-row gap-4 pb-4", message.source === "human" ? "justify-end" : "")}>
+    <div
+      className={cn(
+        "flex flex-row gap-4 pb-4",
+        message.source === "human" ? "justify-end" : "",
+      )}
+    >
       {message.source === "ai" && <Avatar alt={"AI"} />}
       <div className="flex flex-col gap-2 max-w-[calc(100%-8rem)]">
         <div className="bg-muted px-4 py-2 rounded-lg">{message.content}</div>
